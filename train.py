@@ -59,10 +59,8 @@ def do_eval(sess: tf.Session,
             labels_placeholder,
             settings,
         )
-    true_count += sess.run(eval_correct, feed_dict=feed_dict)
+        true_count += sess.run(eval_correct, feed_dict=feed_dict)
     precision = float(true_count) / num_examples
-    # print('Num examples: %d  Num correct: %d  Precision @ 1: %0.04f' %
-    #       (num_examples, true_count, precision))
     return precision
 
 
@@ -166,8 +164,7 @@ def objective(trial: optuna.trial.Trial):
     settings = Settings(
         learning_rate=trial.suggest_loguniform('learning_rate', 1e-5, 1e-2),
         hidden1=trial.suggest_int('hidden1', 50, 200),
-        hidden2=trial.suggest_int('hidden2', 1, 100),
-        batch_size=trial.suggest_int('batch_size', 1, 100),
+        hidden2=trial.suggest_int('hidden2', 10, 50),
     )
     val_err = run_training(settings)
     return val_err
